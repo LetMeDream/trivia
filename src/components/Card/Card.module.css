@@ -1,0 +1,18 @@
+.buttonsContainer{
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:2px;
+}
+
+.wrongo{
+    border-color: red !important;
+    color:red !important;
+    transition: .5s !important;
+}
+.correct{
+    border-color: green !important;
+    color:green !important;
+    transition: 1.5s !important;
+}

@@ -1,0 +1,12 @@
+.btnGroup:hover  button {
+    filter: blur(4px);
+    transition: all .75s;
+}
+.btnGroup button{
+    transition: all .75s;
+}
+.btnGroup button:hover{
+    transform: scale(1.1);
+    filter: blur(0);
+    transition: all .75s;
+}
