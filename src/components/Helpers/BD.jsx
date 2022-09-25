@@ -9,7 +9,7 @@
       respuesta3:"Le Paisson",
       fotografia:"../assets/cultura.png",
       solucion:"La Bastilla",
-      estilo:"cultura"
+      estilos:"cultura"
       
     },
     

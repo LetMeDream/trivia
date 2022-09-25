@@ -7,8 +7,6 @@ const Game = () => {
   const [lives, setLives] = useState(5);
   const [points, setPoints] = useState(0);
   const [questions, setQuestions] = useState(Preguntas);
-
-
   const [question, setQuestion] = useState(questions[Math.floor(Math.random()*(questions.length))]);
 
  

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import cardModule from './Card.module.css'
 /* Pictures */
 import art from './../Assets/arte.webp';
@@ -6,6 +6,7 @@ import nature from './../Assets/nature.webp';
 import culture from './../Assets/culture.jpg';
 import sport from './../Assets/sport.jpg';
 import trip from './../Assets/trip.jpg';
+
 /* MUI Card */
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,19 +18,44 @@ import Badge from '@mui/material/Badge';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 /* To redirect after defeat */
 import { useNavigate } from "react-router-dom";
+/* Audios */
+import {Howl} from 'howler';
+import nice from './../Assets/goodAns.mp3'
+import wrongo from './../Assets/badAns.mp3'
+import defeat from './../Assets/defeat.mp3'
+import tik from './../Assets/fastTicking.mp3'
 
-export default function MediaCard({type,options,answer,currentQuestion,lives,points,setLives,setPoints,question,setQuestion,questions,setQuestions}) {
+
+export default function MediaCard({type,options,answer,currentQuestion,lives,points,setLives,setPoints,
+    question,setQuestion,questions,setQuestions}) {
     const navigate = useNavigate();
-    
-    const [time, setTime] = React.useState(10);
+    const [degradeProtection, setDegradeProtection] = useState(true);
+    /* Sounds */
+    const playSound = (src,msg,loop,stop) => {
+        const sound = new Howl({
+            src,
+            html5:true,
+            loop:loop
+        });
+        sound.play();
+
+        if(msg){
+            sound.on('end',function(){
+                alert(msg)
+            })
+        }
+
+    }
+    /* Time */  
+    const [time, setTime] = useState(10);
     /* Helper function. It does what it says. */
     const capitalizeFirstLetter=(text)=>{
         text = text.charAt(0).toUpperCase() + text.slice(1)
         return text
     } 
     /* We need to create a ref for every button (3) */
-    const parentRef = React.useRef(null)
-    const handleClick = async (option,e)=> {
+    const parentRef = useRef(null)
+    const handleClick = async (option,e) => {
         /* Let's block clicks for a while */
         parentRef.current.style.pointerEvents = 'none'
         /* wrong answer? */
@@ -40,11 +66,12 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                     child.classList.add(cardModule.correct)
                 }
             }
+            playSound(wrongo);
             setLives(lives-1);
-            setPoints(points-10)
+            setPoints(points-10);
             /* Here we compare to '1' instead of '0' because lives will only have the value of 0 after the next render */
-            if(lives===1||points===0){
-                alert("You've lost");
+            if(lives===1||(points<=0&&!degradeProtection)){
+                playSound(defeat,"You've lost")
                 await new Promise((resolve)=>{
                     setTimeout(() => {
                         return navigate(`/`);
@@ -57,13 +84,13 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                         Don't believe me? || or want more info about it?; check this short:
                         https://www.youtube.com/shorts/7IRH290OqqQ
                         */
-                    }, "1000");
-                })
-                
-                
+                    }, "4500");
+                }) 
             }
+            setDegradeProtection(false);
         }
         else{
+            playSound(nice)
             e.target.classList.add(cardModule.correct);
             setPoints(points+10);
         }
@@ -85,20 +112,21 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
 
           
     }
-    const [img, setImg] = React.useState()
+    
 
     /* Let's count down */
-    /* React.useEffect(()=>{
+    useEffect(()=>{
         let intervalId = setInterval( async() => {
             if(time>0){
                 setTime(time-1)
             }else{
-                alert("You've lost");
+                parentRef.current.style.pointerEvents = 'none'
+                playSound(defeat,"You've lost")
                 clearInterval(intervalId);
                 await new Promise((resolve)=>{
                     setTimeout(() => {
                         return navigate(`/`);
-                    }, "500");
+                    }, "4500");
                 })
             }
     
@@ -107,9 +135,12 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
         return () => {
             clearInterval(intervalId);
         }
-    },[time,navigate]) */
+    // eslint-disable-next-line
+    },[time])
     
-    React.useEffect(()=>{
+    /* Thisis just the image changin logic */
+    const [img, setImg] = useState()
+    useEffect(()=>{
         switch (type) {
             case 'arte':
                 setImg(art)
@@ -141,6 +172,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
         <div className={styles.counter}>{time}</div>
         <Card sx={{ maxWidth: 360 }}>
             <CardMedia
+                onClick={()=>{}}
                 sx={{height:'180px'}} 
                 component="img"
                 image={img}
