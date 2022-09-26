@@ -23,29 +23,47 @@ import {Howl} from 'howler';
 import nice from './../Assets/goodAns.mp3'
 import wrongo from './../Assets/badAns.mp3'
 import defeat from './../Assets/defeat.mp3'
-import tik from './../Assets/fastTicking.mp3'
+import clock from './../Assets/tictac.mp3'
 
+/* For some magic reason, for react-howler to be able to stop/pause a sound, the Howl
+object must be instanciated 'globally' (outside our functional component)
+*/
+const ticking = new Howl({
+    src:clock,
+    html5:true,
+    loop:true
+});
 
 export default function MediaCard({type,options,answer,currentQuestion,lives,points,setLives,setPoints,
     question,setQuestion,questions,setQuestions}) {
     const navigate = useNavigate();
     const [degradeProtection, setDegradeProtection] = useState(true);
-    /* Sounds */
-    const playSound = (src,msg,loop,stop) => {
+    /* Just a boolean to stop the counter from handleClick() */
+    const [counting, setCounting] = useState(true);
+
+    /* Sounds, (not globally) */
+    const playSound = (src,msg,loop) => {
         const sound = new Howl({
             src,
             html5:true,
             loop:loop
         });
-        sound.play();
-
-        if(msg){
+        return sound
+        /* if(msg){
             sound.on('end',function(){
                 alert(msg)
             })
-        }
-
+        } */
     }
+    const wrongAns = playSound(wrongo);
+    const goodAns = playSound(nice);
+    const gameOver = playSound(defeat);
+
+    /* Ticking */
+    useEffect(()=>{
+        ticking.play()
+    },[])
+
     /* Time */  
     const [time, setTime] = useState(10);
     /* Helper function. It does what it says. */
@@ -53,7 +71,8 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
         text = text.charAt(0).toUpperCase() + text.slice(1)
         return text
     } 
-    /* We need to create a ref for every button (3) */
+    /* I needed to create a ref for every button (3) 
+    but thanks to a wise man advise, what I'll do it just create a ref for those 3 buttons parents */
     const parentRef = useRef(null)
     const handleClick = async (option,e) => {
         /* Let's block clicks for a while */
@@ -66,14 +85,18 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                     child.classList.add(cardModule.correct)
                 }
             }
-            playSound(wrongo);
+            wrongAns.play()
             setLives(lives-1);
-            setPoints(points-10);
+            /* Not taking point out while degradeProtection is truthy */
+            !degradeProtection ? setPoints(points-10) : setPoints(points);
             /* Here we compare to '1' instead of '0' because lives will only have the value of 0 after the next render */
             if(lives===1||(points<=0&&!degradeProtection)){
-                playSound(defeat,"You've lost")
+                setCounting(false);
+                ticking.stop();
+                gameOver.play();
                 await new Promise((resolve)=>{
                     setTimeout(() => {
+                        alert("You've lost");
                         return navigate(`/`);
                         /* You might be wondering why I'm awaiting on this unnecessary promise. This promise, altho unncessary, does what it
                         attempts to */
@@ -90,7 +113,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
             setDegradeProtection(false);
         }
         else{
-            playSound(nice)
+            goodAns.play()
             e.target.classList.add(cardModule.correct);
             setPoints(points+10);
         }
@@ -113,30 +136,35 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
           
     }
     
-
     /* Let's count down */
     useEffect(()=>{
         let intervalId = setInterval( async() => {
             if(time>0){
                 setTime(time-1)
             }else{
-                parentRef.current.style.pointerEvents = 'none'
-                playSound(defeat,"You've lost")
+                parentRef.current.style.pointerEvents = 'none';
+                ticking.stop();
+                gameOver.play();
                 clearInterval(intervalId);
                 await new Promise((resolve)=>{
                     setTimeout(() => {
+                        alert("You've lost");
                         return navigate(`/`);
                     }, "4500");
                 })
             }
     
         }, 1000);
+        /* To stop the counter as soon as you lose */
+        if(!counting){
+            clearInterval(intervalId);
+        }
 
         return () => {
             clearInterval(intervalId);
         }
     // eslint-disable-next-line
-    },[time])
+    },[time,counting])
     
     /* Thisis just the image changin logic */
     const [img, setImg] = useState()
@@ -172,7 +200,6 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
         <div className={styles.counter}>{time}</div>
         <Card sx={{ maxWidth: 360 }}>
             <CardMedia
-                onClick={()=>{}}
                 sx={{height:'180px'}} 
                 component="img"
                 image={img}
