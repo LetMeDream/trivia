@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/react-gh-pages/static/css/main.52267d67.css",
+    "main.js": "/react-gh-pages/static/js/main.ee67afd5.js",
+    "static/js/787.dddbe7b4.chunk.js": "/react-gh-pages/static/js/787.dddbe7b4.chunk.js",
+    "static/media/culture.jpg": "/react-gh-pages/static/media/culture.3ea31a2d48fbdf437138.jpg",
+    "static/media/nature.webp": "/react-gh-pages/static/media/nature.78b6b54b1d614b65dcbf.webp",
+    "static/media/trip.jpg": "/react-gh-pages/static/media/trip.39fe440fab031db80d87.jpg",
+    "static/media/arte.webp": "/react-gh-pages/static/media/arte.9b0ad777159f13326ee7.webp",
+    "static/media/tictac.mp3": "/react-gh-pages/static/media/tictac.411c1cfd5bc112ca4a80.mp3",
+    "static/media/sport.jpg": "/react-gh-pages/static/media/sport.3c053bd687fbe65b069a.jpg",
+    "static/media/defeat.mp3": "/react-gh-pages/static/media/defeat.fce024532beca8266192.mp3",
+    "static/media/goodAns.mp3": "/react-gh-pages/static/media/goodAns.e7ee2dcadbf4547cef03.mp3",
+    "static/media/badAns.mp3": "/react-gh-pages/static/media/badAns.6cdf7b16f7cac14370e3.mp3",
+    "index.html": "/react-gh-pages/index.html",
+    "main.52267d67.css.map": "/react-gh-pages/static/css/main.52267d67.css.map",
+    "main.ee67afd5.js.map": "/react-gh-pages/static/js/main.ee67afd5.js.map",
+    "787.dddbe7b4.chunk.js.map": "/react-gh-pages/static/js/787.dddbe7b4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.52267d67.css",
+    "static/js/main.ee67afd5.js"
+  ]
+}
