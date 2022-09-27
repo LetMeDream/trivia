@@ -62,6 +62,9 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
     /* Ticking */
     useEffect(()=>{
         ticking.play()
+        return () => {
+            ticking.stop();
+        }
     },[])
 
     /* Time */  
@@ -113,6 +116,8 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
             setDegradeProtection(false);
         }
         else{
+            /* You ain't protected anymore */
+            setDegradeProtection(false)
             goodAns.play()
             e.target.classList.add(cardModule.correct);
             setPoints(points+10);
@@ -155,7 +160,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
             }
     
         }, 1000);
-        /* To stop the counter as soon as you lose */
+        // To stop the counter as soon as you lose 
         if(!counting){
             clearInterval(intervalId);
         }
@@ -166,7 +171,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
     // eslint-disable-next-line
     },[time,counting])
     
-    /* Thisis just the image changin logic */
+    /* This is just the image changing logic */
     const [img, setImg] = useState()
     useEffect(()=>{
         switch (type) {
