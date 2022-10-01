@@ -23,8 +23,8 @@ const MainButton = () => {
             >
             <ButtonGroup className={cssModule.btnGroup} variant="contained" orientation="vertical" color='secondary' aria-label="outlined button group"
                 sx={{ 
-                gap:'10px',
                 '& > * > *':{
+                    marginTop: '10px !important',
                     backgroundColor: '#F4EEFF !important', 
                     borderColor:'#F4EEFF !important', 
                     color:'#424874 !important',

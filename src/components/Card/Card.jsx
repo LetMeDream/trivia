@@ -17,13 +17,15 @@ import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 /* To redirect after defeat */
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 /* Audios */
 import {Howl} from 'howler';
 import nice from './../Assets/goodAns.mp3'
 import wrongo from './../Assets/badAns.mp3'
 import defeat from './../Assets/defeat.mp3'
 import clock from './../Assets/tictac.mp3'
+/* Questions JSON */
+import {Preguntas} from './../../components/Helpers/BD.jsx'
 
 /* For some magic reason, for react-howler to be able to stop/pause a sound, the Howl
 object must be instanciated 'globally' (outside our functional component)
@@ -34,12 +36,29 @@ const ticking = new Howl({
     loop:true
 });
 
-export default function MediaCard({type,options,answer,currentQuestion,lives,points,setLives,setPoints,
-    question,setQuestion,questions,setQuestions}) {
-    const navigate = useNavigate();
+export default function MediaCard( {setGameOver, points, setPoints} ) {
+    const [lives, setLives] = useState(1);
     const [degradeProtection, setDegradeProtection] = useState(true);
     /* Just a boolean to stop the counter from handleClick() */
     const [counting, setCounting] = useState(true);
+    /* For creating our options array, our type,
+       correct answer and more 
+    */
+    const [questions, setQuestions] = useState(Preguntas);
+    const [question, setQuestion] = useState(questions[Math.floor(Math.random()*(questions.length))]);
+    const [answer,setAnswer] =  useState(question.solucion);
+    const [options, setOptions] = useState([]); 
+    const [type, setType] = useState('');
+    useEffect(()=>{
+        /* Taking current question out of questions */
+        setQuestions(questions => questions.filter((q)=>q.id!==question.id) ); 
+        /* console.log(question)
+        console.log(questions); */
+        setAnswer(question.solucion);
+        setType(question.estilos);
+        setOptions([question.respuesta1,question.respuesta2,question.respuesta3]);
+    },[question])
+
 
     /* Sounds, (not globally) */
     const playSound = (src,msg,loop) => {
@@ -63,12 +82,14 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
     useEffect(()=>{
         ticking.play()
         return () => {
+            /* To stop ticking sound on unmounting (whencgoing back)
+            in out History.navigation */
             ticking.stop();
         }
     },[])
 
     /* Time */  
-    const [time, setTime] = useState(10);
+    const [time, setTime] = useState(15);
     /* Helper function. It does what it says. */
     const capitalizeFirstLetter=(text)=>{
         text = text.charAt(0).toUpperCase() + text.slice(1)
@@ -91,7 +112,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
             wrongAns.play()
             setLives(lives-1);
             /* Not taking point out while degradeProtection is truthy */
-            !degradeProtection ? setPoints(points-10) : setPoints(points);
+            !degradeProtection ? setPoints(points-5) : setPoints(points);
             /* Here we compare to '1' instead of '0' because lives will only have the value of 0 after the next render */
             if(lives===1||(points<=0&&!degradeProtection)){
                 setCounting(false);
@@ -100,7 +121,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                 await new Promise((resolve)=>{
                     setTimeout(() => {
                         alert("You've lost");
-                        return navigate(`/`);
+                        setGameOver(true);
                         /* You might be wondering why I'm awaiting on this unnecessary promise. This promise, altho unncessary, does what it
                         attempts to */
                         /* It's intention is to make the whole code actually stop until it can resolve, so the code stating:
@@ -136,7 +157,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
 
         })
         /* set counter back to 10 */
-        setTime(10);
+        setTime(15);
 
           
     }
@@ -154,7 +175,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                 await new Promise((resolve)=>{
                     setTimeout(() => {
                         alert("You've lost");
-                        return navigate(`/`);
+                        setGameOver(true);
                     }, "4500");
                 })
             }
@@ -223,7 +244,7 @@ export default function MediaCard({type,options,answer,currentQuestion,lives,poi
                     </div>
                 </div>
                 <Typography variant="body2" color="text.secondary" sx={{textAlign:'center'}}>
-                {currentQuestion}
+                {question.pregunta}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing={true} sx={{flexDirection:'column',gap:'2px',alignItems:'center'}}>
