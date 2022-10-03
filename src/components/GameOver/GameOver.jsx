@@ -6,14 +6,24 @@ import HighScoresTable from '../HighScoresTable';
 import {Link} from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import { IconContext } from "react-icons";
+import { useEffect, useState } from 'react';
+/* Toast */
+import Snackbar from './../Snackbar'
 
 const GameOver = ({points}) => {
 
     const style={
         container: `h-[100vh] w-[90vw] flex flex-col justify-around items-center bg-[#424874] py-10`,
         score: `flex flex-col p-4 items-center`,
-        backArrow: `absolute left-4 top-10 cursor-pointer`
+        backArrow: `absolute left-4 top-10 cursor-pointer`,
+        snackBar: `absolute`
     }
+
+    const [newTopScore, setNewTopScore] = useState(false);
+
+    useEffect(()=>{
+      console.log('a new score have been set ' + newTopScore)
+    },[newTopScore])
 
   return (
     <Box className={style.container}>
@@ -28,7 +38,11 @@ const GameOver = ({points}) => {
             <Divider flexItem={true}/>
             <p>You scored <strong>{points}</strong> points</p>
         </Paper>
-        <HighScoresTable score={points} />
+        <HighScoresTable setNewTopScore={setNewTopScore} score={points} />
+
+        <div className={style.snackBar}>
+          <Snackbar points={points} newTopScore={newTopScore} />
+        </div>
     </Box>
   )
 }

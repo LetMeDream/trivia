@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-export default function InsetList({score}) {
+export default function InsetList({score, setNewTopScore}) {
     const [highScores, setHighScores] = useState( JSON.parse(localStorage.getItem('highScores')) || []);
 
     function sortArrayOfObject(a,b){
@@ -24,6 +24,12 @@ export default function InsetList({score}) {
         let date = new Date();
         let day = date.getDate(), month = date.getMonth()+1, year = date.getFullYear().toString().slice(2);
         let formattedDate = day + '/' + month + '/' + year;
+
+        /* if new highscore */
+        if(!highScores.some(oldScore => oldScore.score === score) && (score > highScores[2]?.score || highScores.length < 3)){
+          console.log('new highscore scored');
+          setNewTopScore(true);
+        }
         if(previousScores){
             /* We won't include the 'highScore' if it was already scored before */
             if(highScores.some(oldScore => oldScore.score === score)){
