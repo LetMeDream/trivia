@@ -70,11 +70,9 @@ const MainButton = () => {
                     backgroundColor: '#DCD6F7'
                 }
                 }}>
-                <Link to='/'>
-                    <Button>            
+                <Button variant='Contained'>         
                         <Instructions text='Instructions'/>
-                    </Button>
-                </Link>
+                </Button>
                 <Link to='/game'>
                     <Button>
                         Play

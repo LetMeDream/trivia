@@ -26,7 +26,7 @@ export default function Instructions({text}) {
 
   return (
     <div>
-      <div onClick={handleOpen}>
+      <div onClick={handleOpen} className='relative z-10'>
         {text}  
       </div>
       <Modal
