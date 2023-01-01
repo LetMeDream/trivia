@@ -6,6 +6,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 /* react-router-dom */
 import {Link} from 'react-router-dom'
+import Instructions from '../Instructions/Instructions';
 
 const MainButton = () => {
   return (
@@ -71,7 +72,7 @@ const MainButton = () => {
                 }}>
                 <Link to='/'>
                     <Button>            
-                        Instructions
+                        <Instructions text='Instructions'/>
                     </Button>
                 </Link>
                 <Link to='/game'>

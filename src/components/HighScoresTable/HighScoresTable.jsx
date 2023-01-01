@@ -53,8 +53,6 @@ export default function InsetList({score, setNewTopScore}) {
         localStorage.setItem('highScores', JSON.stringify(highScores));
     },[highScores])
 
-
-
     /* Overcomplicated MUI media query logic */
     const theme = useTheme()
     const small = useMediaQuery(theme.breakpoints.down('sm'));

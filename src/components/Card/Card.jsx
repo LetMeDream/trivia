@@ -37,7 +37,7 @@ const ticking = new Howl({
 });
 
 export default function MediaCard( {setGameOver, points, setPoints} ) {
-    const [lives, setLives] = useState(1);
+    const [lives, setLives] = useState(5);
     const [degradeProtection, setDegradeProtection] = useState(true);
     /* Just a boolean to stop the counter from handleClick() */
     const [counting, setCounting] = useState(true);
@@ -83,7 +83,7 @@ export default function MediaCard( {setGameOver, points, setPoints} ) {
         ticking.play()
         return () => {
             /* To stop ticking sound on unmounting (whencgoing back)
-            in out History.navigation */
+            in our History.navigation */
             ticking.stop();
         }
     },[])
@@ -156,9 +156,8 @@ export default function MediaCard( {setGameOver, points, setPoints} ) {
             }, "1000")
 
         })
-        /* set counter back to 10 */
+        /* set counter back to 15 */
         setTime(15);
-
           
     }
     
@@ -189,8 +188,7 @@ export default function MediaCard( {setGameOver, points, setPoints} ) {
         return () => {
             clearInterval(intervalId);
         }
-    // eslint-disable-next-line
-    },[time,counting])
+    },[time,counting,gameOver,setGameOver])
     
     /* This is just the image changing logic */
     const [img, setImg] = useState()
