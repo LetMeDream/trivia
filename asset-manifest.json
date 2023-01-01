@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/trivia/static/css/main.c775a096.css",
-    "main.js": "/trivia/static/js/main.b755aa9c.js",
+    "main.css": "/trivia/static/css/main.d755eae1.css",
+    "main.js": "/trivia/static/js/main.e31e2cf2.js",
     "static/js/787.dddbe7b4.chunk.js": "/trivia/static/js/787.dddbe7b4.chunk.js",
     "static/media/culture.jpg": "/trivia/static/media/culture.3ea31a2d48fbdf437138.jpg",
     "static/media/nature.webp": "/trivia/static/media/nature.78b6b54b1d614b65dcbf.webp",
@@ -13,12 +13,12 @@
     "static/media/goodAns.mp3": "/trivia/static/media/goodAns.e7ee2dcadbf4547cef03.mp3",
     "static/media/badAns.mp3": "/trivia/static/media/badAns.6cdf7b16f7cac14370e3.mp3",
     "index.html": "/trivia/index.html",
-    "main.c775a096.css.map": "/trivia/static/css/main.c775a096.css.map",
-    "main.b755aa9c.js.map": "/trivia/static/js/main.b755aa9c.js.map",
+    "main.d755eae1.css.map": "/trivia/static/css/main.d755eae1.css.map",
+    "main.e31e2cf2.js.map": "/trivia/static/js/main.e31e2cf2.js.map",
     "787.dddbe7b4.chunk.js.map": "/trivia/static/js/787.dddbe7b4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c775a096.css",
-    "static/js/main.b755aa9c.js"
+    "static/css/main.d755eae1.css",
+    "static/js/main.e31e2cf2.js"
   ]
 }
