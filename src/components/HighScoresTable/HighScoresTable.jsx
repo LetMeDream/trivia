@@ -46,6 +46,7 @@ export default function InsetList({score, setNewTopScore}) {
                 score:score
             }])
         }
+    // eslint-disable-next-line
     },[]);
 
     useEffect(()=>{
