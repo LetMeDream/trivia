@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/trivia/static/css/main.c9b897ae.css",
-    "main.js": "/trivia/static/js/main.c0bff0a1.js",
+    "main.js": "/trivia/static/js/main.155cb8f5.js",
     "static/js/453.961aa48c.chunk.js": "/trivia/static/js/453.961aa48c.chunk.js",
     "static/media/culture.jpg": "/trivia/static/media/culture.3ea31a2d48fbdf437138.jpg",
     "static/media/nature.webp": "/trivia/static/media/nature.78b6b54b1d614b65dcbf.webp",
@@ -14,11 +14,11 @@
     "static/media/badAns.mp3": "/trivia/static/media/badAns.6cdf7b16f7cac14370e3.mp3",
     "index.html": "/trivia/index.html",
     "main.c9b897ae.css.map": "/trivia/static/css/main.c9b897ae.css.map",
-    "main.c0bff0a1.js.map": "/trivia/static/js/main.c0bff0a1.js.map",
+    "main.155cb8f5.js.map": "/trivia/static/js/main.155cb8f5.js.map",
     "453.961aa48c.chunk.js.map": "/trivia/static/js/453.961aa48c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c9b897ae.css",
-    "static/js/main.c0bff0a1.js"
+    "static/js/main.155cb8f5.js"
   ]
 }
